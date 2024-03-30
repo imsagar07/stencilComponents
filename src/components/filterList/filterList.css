@@ -1,0 +1,39 @@
+:host {
+    display: block;
+  }
+  .column {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    height: 20px; 
+    text-align: center;
+  }
+  h2{font-size: 14px;}
+  
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 10px;
+  }
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th {  
+  background-color: #3880ff !important; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 12px;
+  }
+  td, th { 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    text-align: left; 
+    font-size: 15px;
+    color: black; 
+  }
+  .keywordText{
+    color: gray;
+  }
+  b{color:black}
+  
+  

@@ -6,22 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface FilterList {
+        "keyword": string;
+    }
     interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
     }
 }
 declare global {
+    interface HTMLFilterListElement extends Components.FilterList, HTMLStencilElement {
+    }
+    var HTMLFilterListElement: {
+        prototype: HTMLFilterListElement;
+        new (): HTMLFilterListElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -29,25 +26,18 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "filter-list": HTMLFilterListElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface FilterList {
+        "keyword"?: string;
+    }
     interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
     }
     interface IntrinsicElements {
+        "filter-list": FilterList;
         "my-component": MyComponent;
     }
 }
@@ -55,6 +45,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "filter-list": LocalJSX.FilterList & JSXBase.HTMLAttributes<HTMLFilterListElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }
