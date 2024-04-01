@@ -6,6 +6,8 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class MyComponent {
+  @Prop() keyword: string = '';
+  @State() filteredList: any = [];
   _staticListData = [
     { firstName: 'Sagar', lastName: "Fale", age: 28, role: 'Software Engg' },
     { firstName: 'Rajat', lastName: "Patidar", age: 26, role: 'Accountant' },
@@ -20,11 +22,36 @@ export class MyComponent {
   ]
 
   componentWillLoad() {
-    this._staticListData;
+    this.filterList();
+  }
+
+  @Watch('keyword')
+  keywordChanged(newValue: string) {
+    this.keyword = newValue;
+    this.filterList();
+  }
+
+  filterList() {
+    if (this.keyword && this.keyword.trim() !== '') {
+      const lowercaseKeyword = this.keyword.trim().toLowerCase();
+      this.filteredList = this._staticListData.filter(item =>
+        item.firstName.toLowerCase().includes(lowercaseKeyword) ||
+        item.lastName.toLowerCase().includes(lowercaseKeyword) ||
+        item.role.toLowerCase().includes(lowercaseKeyword) ||
+        item.age.toString().toLowerCase().includes(lowercaseKeyword)
+      );
+    } else {
+      this.filteredList = this._staticListData.slice();
+    }
   }
 
   render() {
     return <div class="outerDiv">
+      {this.keyword ? ( 
+        <div class="keywordText">You are searching for :: <b>{this.keyword}</b></div>
+      ) : (
+        <div></div>
+      )}
       <table>
         <thead>
           <tr>
@@ -35,7 +62,7 @@ export class MyComponent {
           </tr>
         </thead>
         <tbody>
-          {this._staticListData.map((empData) =>
+          {this.filteredList.map((empData) =>
             <tr>
               <td>{empData?.firstName}</td>
               <td>{empData?.lastName}</td>
@@ -46,6 +73,7 @@ export class MyComponent {
         </tbody>
       </table>
     </div>;
+  }
   }
 
 }
